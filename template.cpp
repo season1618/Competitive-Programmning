@@ -9,7 +9,7 @@ const int size=1e5;
 const int inf=1e9;
 int main(){
 }
-/*タスクを並列に行う 二分探索
+/*タスクを並列に行う
 プログラミングコンテストでの動的計画法
 最強最速アルゴリズマー養成講座
 sorted
