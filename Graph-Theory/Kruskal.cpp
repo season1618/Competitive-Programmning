@@ -46,5 +46,6 @@ int main(){
 	rep(i,0,M){
 		cin>>a>>b>>c;a--;b--;
 		pq.push({-c,{a,b}});
-	}cout<<kruskal(uf)<<endl;
+	}
+	cout<<kruskal(uf)<<endl;
 }

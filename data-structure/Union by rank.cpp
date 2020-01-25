@@ -8,7 +8,7 @@ int N,M;//N:vertex M:edge
 class union_find{//union by rank
 public:
 	vector<int> par;
-	union_find(int n):par(N){
+	union_find(int n):par(n){
 		rep(i,0,n) par[i]=i;
 	}
 	int root(int v){
