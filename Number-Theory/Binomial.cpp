@@ -53,13 +53,14 @@ long modperm(long n,long r,long p){//nPr mod p
     return res;
 }
 long modcomb(long n,long r,long p){//nCr mod p
-	long temp=modfact(r,p);
-	long res=1; int i=0;
+    long x = modfact(max(n-r,r),p);
+    long y = modperm(n,max(n-r,r),p);
+	int i = 0;
 	while( (p-2) >= (1<<i) ){
-		if( (p-2) & (1<<i) ) (res*=x)%=p;
+		if( (p-2) & (1<<i) ) (y*=x)%=p;
 		i++; x = x * x % p;
 	}
-    return (res*modperm(n,r,p))%p;
+	return y;
 }
 //-------------------------------------------------------------
 template<typename T>
