@@ -11,15 +11,17 @@ public:
 	vector<int> par;
 	vector<vector<int>> g;
 	union_find(int n):par(n),g(n){
-		rep(i,0,n){ par[i]=i; g[i].push_back(i); }
+		rep(i,0,n){ par[i] = i; g[i].push_back(i); }
 	}
 	void unite(int x,int y){
-		if(g[par[x]].size()<g[par[y]].size()) swap(x,y);
-		int a=par[x],b=par[y];
+		if(g[par[x]].size() < g[par[y]].size()) swap(x,y);
+		int a = par[x];
+		int b = par[y];
 		for(int v:g[b]){
 			par[v]=a;
 			g[a].push_back(v);
-		}g[b].clear();
+		}
+		g[b].clear();
 		return;
 	}
 	bool same(int x,int y){

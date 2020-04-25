@@ -10,18 +10,19 @@ public:
 	vector<int> par;
 	vector<int> sub;
 	union_find(int n):par(n),sub(n){
-		rep(i,0,n){ par[i]=i; sub[i]=1; }
+		rep(i,0,n){ par[i] = i; sub[i] = 1; }
 	}
 	int root(int v){
 		if(g[v]==v) return v;
 		else return root(g[v]);
 	}
 	void unite(int x,int y){//union by size
-		int a=root(x),b=root(y);
+		int a = root(x);
+		int b = root(y);
 		if(a==b) return;
-		if(sub[a]<sub[b]) swap(x,y);
-		par[root(y)]=root(x);
-		sub[root(x)]++;
+		if(sub[a] < sub[b]) swap(a,b);
+		par[b] = a;
+		sub[a]++;
 		return;
 	}
 	bool same(int x,int y){
