@@ -7,11 +7,9 @@ using namespace std;
 const long mod=1e5;
 const int size=1e5;
 const int inf=1e9;
-int main(){
+int main(){lehmer / von Sterneck convolution
 }
-/*タスクを並列に行う
-プログラミングコンテストでの動的計画法
-最強最速アルゴリズマー養成講座
+/*
 sorted
 auto it=lower_bound(v.begin(),v.end(),w) w <= v[it-v.begin()]
 auto it=upper_bound(v.begin(),v.end(),w) w < v[it-v.begin()]
