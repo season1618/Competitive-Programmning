@@ -7,8 +7,11 @@ vector<pair<int,long>> g[size];
 long d[size]; int prev[size];
 void dijkstra(int a){// O(NlogN+M)
 	priority_queue<pair<long,int>> pq;
-	rep(i,0,N){ d[i] = inf; pq.push({-d[i],i}); }
-	d[a] = 0;pq.push({0,a});
+	rep(i,0,N){
+		d[i] = inf;
+		pq.push({-d[i] , i});
+	}
+	d[a] = 0; pq.push({0 , a});
 	int v; long temp;
 	while(!pq.empty()){
 		v = pq.top().second;
@@ -20,7 +23,7 @@ void dijkstra(int a){// O(NlogN+M)
 			if(d[u] > temp){
 				d[u] = temp;
 				prev[u] = v;
-				pq.push({-d[u],u});
+				pq.push({-d[u] , u});
 			}
 		}
 	}return;
