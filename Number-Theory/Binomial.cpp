@@ -8,48 +8,48 @@ const long mod=1e9+7;
 const int size=1e5;
 const int inf=1e9;
 template<typename T> T fact(T n){//n! O(n)
-    T res=1;
-    rep(i,1,n+1) res*=i;
+    T res = 1;
+    rep(i,1,n+1) res *= i;
     return res;
 }
 template<typename T> T perm(T n,T r){//nPr O(r)
-    T res=1;
-    rep(i,n-r+1,n+1) res*=i;
+    T res = 1;
+    rep(i,n-r+1,n+1) res *= i;
     return res;
 }
 template<typename T> T comb(T n,T r){//nCr
-    return perm(n,r)/fact(r);
+    return perm(n,r) / fact(r);
 }
 //----------------------------------------------------------
 long fact[size];
 void calc(int n){
-	fact[0]=1;
+	fact[0] = 1;
 	rep(i,1,n+1){
-		fact[i]=(fact[i-1]*i)%mod;
+		fact[i] = (fact[i-1] * i) % mod;
 	}
 	return;
 }
 long modcomb(long n,long r){//nCr mod p
-	if(n<r) return 0;
-	long temp=(fact[n-r]*fact[r])%mod;
-	long res=1; int i=0;
+	if(n < r) return 0;
+	long x = (fact[n-r] * fact[r]) % mod;
+	long res = 1; int i = 0;
 	while( (mod-2) >= (1<<i) ){
-		if( (mod-2) & (1<<i) ) (res*=x)%=mod;
+		if( (mod-2) & (1<<i) ) (res *= x) %= mod;
 		i++; x = x * x % mod;
 	}
-    return (res*fact[n])%mod;
+    return (res * fact[n]) % mod;
 }
 //------------------------------------------------------------
 long modfact(long n,long p){//n! mod p
-    if(n>=p) return 0;
-    long res=1;
-    rep(i,1,n+1) (res*=i)%=p;
+    if(n >= p) return 0;
+    long res = 1;
+    rep(i,1,n+1) (res *= i) %= p;
     return res;
 }
 long modperm(long n,long r,long p){//nPr mod p
     if( n-r >= p || r%p > n%p) return 0;
-    long res=1;
-    rep(i,n-r+1,n+1) (res*=i)%=p;
+    long res = 1;
+    rep(i,n-r+1,n+1) (res*=i) %= p;
     return res;
 }
 long modcomb(long n,long r,long p){//nCr mod p
