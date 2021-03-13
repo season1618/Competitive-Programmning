@@ -1,28 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define rep(i,x,y) for(int i=x;i<y;i++)
+#define print(A,x,n) rep(I,0,n){cout<<(I ? " ":"")<<A[I]x;}cout<<endl;
+#define pprint(A,y,m,n) rep(J,0,m){print(A[J],y,n);}
+const long mod=1e9+7;
 const int size=1e5;
-vector<int> g[size];
-vector<pair<bool,bool>> check(size,make_pair(false,false));
-bool f,s;
-bool cycle(int v){
-	check[v].first=true;
+const int inf=1e9;
+int N,M;
+vector<int> g[1000];
+int visit[1000] = {};
+int depth[1000] = {};
+deque<int> dq(2000,0);
+bool dfs(int v){// O(N + M)
+    bool flag = false;
+	visit[v]++;
 	for(int u:g[v]){
-		f=check[u].first;
-		s=check[u].second;
-		if(!f)if(cycle(u)) return true;
-		else if(!s) return true;
-	}check[v].second=true;
-	return false;
+        if(visit[u] == 0){
+            depth[u] = depth[v] + 1;
+            if(dfs(u)) flag = true;
+        }else if(visit[u] == 1){
+            flag = true;
+            if(depth[v] - depth[u] > dq.size()) continue;// smallest
+			dq.clear();// size : depth[v] - depth[u] + 1
+			rep(i,0,N)if(visit[i] == 1 && depth[i] >= depth[u]) dq.push_back(i+1);
+		}
+	}visit[v]++;
+    return flag;
 }
 int main(){
-	int N,M;cin>>N>>M;
+	cin>>N>>M;
 	int a,b;
 	rep(i,0,M){
-		cin>>a>>b;a--;b--;
+		cin>>a>>b; a--; b--;
 		g[a].push_back(b);
 	}
-	rep(i,0,N){
-		if(!check[i].first) cycle(i);
+	rep(i,0,N){// O(N^2)
+        if(visit[i]) continue;
+        rep(j,0,N) depth[j] = 0;
+        dfs(i);
+    }
+    if(dq.size() == 2000) cout<<-1<<endl;
+	else{
+		cout<<dq.size()<<endl;
+		rep(i,0,dq.size()) cout<<dq[i]<<endl;
 	}
 }

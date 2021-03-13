@@ -12,40 +12,40 @@ priority_queue<pair<int,pair<int,int>>> pq;
 class union_find{//union by rank
 public:
 	vector<int> g;
-	union_find(int n){
-		rep(i,0,n) g.push_back(i);
+	union_find(int n):g(n){
+		rep(i,0,n) g[i] = i;
 	}
 	int root(int v){
-		if(this->g[v]==v) return v;
-		else{ this->g[v]=root(this->g[v]);return this->g[v]; }
+		if(this->g[v] == v) return v;
+		else return this->g[v] = root(this->g[v]);
 	}
-	void unite(int x,int y){ 
-		this->g[root(x)]=root(y);
+	void unite(int x, int y){ 
+		this->g[root(x)] = root(y);
 		return;
 	}
-	bool same(int x,int y){
-		return root(x)==root(y);
+	bool same(int x, int y){
+		return root(x) == root(y);
 	}
 };
 int kruskal(union_find uf){// O(ElogV)
-	int cost=0;
+	int cost = 0;
 	int v,u;
 	while(!pq.empty()){
-		v=pq.top().second.first;
-		u=pq.top().second.second;
-		if(!uf.same(v,u)){
-			uf.unite(v,u);
-			cost-=pq.top().first;
+		v = pq.top().second.first;
+		u = pq.top().second.second;
+		if(!uf.same(v, u)){
+			uf.unite(v, u);
+			cost -= pq.top().first;
 		}pq.pop();
 	}return cost;
 }
 int main(){
 	cin>>N>>M;
 	union_find uf(N);
-	int a,b;int c;
+	int a,b; int c;
 	rep(i,0,M){
-		cin>>a>>b>>c;a--;b--;
-		pq.push({-c,{a,b}});
+		cin>>a>>b>>c; a--;b--;
+		pq.push({-c, {a, b}});
 	}
 	cout<<kruskal(uf)<<endl;
 }

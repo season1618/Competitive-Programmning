@@ -6,7 +6,7 @@ using namespace std;
 #define pprint(A,m,n) rep(j,0,m){print(A[j],n);}
 const long mod=1e9+7;
 const int size=1e5;
-const int INF=1e9;
+const int inf=1e9;
 struct edge{
 	int first;
 	int second;
@@ -20,20 +20,18 @@ struct edge{
 };
 int N,M;
 vector<edge> g;
-int dist[size],pred[size];
-void bellman_ford(int s){// O(VE)
-	rep(i,0,N){ dist[i]=INF; pred[i]=-1; }
-	dist[s]=0;
-	rep(i,0,N){// n times
-		rep(j,0,M){// all edges
-            edge e=g[j];
-			int v=e.first;
-			int u=e.second;
-			if(dist[u]>dist[v]+e.cost){
-				dist[u]=dist[v]+e.cost;
-				pred[u]=v;
-				if(i==N-1){ cout<<"negative loop"<<endl; break; }
-			}
+int dist[size],prev[size];
+void bellman_ford(int s){// O(NM)
+	rep(i,0,N){ dist[i] = inf; prev[i] = -1; }
+	dist[s] = 0;
+	rep(i,0,N)rep(j,0,M){
+        edge e = g[j];
+		int v = e.first;
+		int u = e.second;
+		if(dist[u] > dist[v] + e.cost){
+			dist[u] = dist[v] + e.cost;
+			prev[u] = v;
+			if(i == N-1){ cout<<"negative loop"<<endl; break; }
 		}
 	}return;
 }
@@ -41,8 +39,7 @@ int main(){
 	cin>>N>>M;
 	int a,b,c;
 	rep(i,0,M){
-		cin>>a>>b>>c;
-		g.push_back({a,b,c});
-        //g[i]={a,b,c};
+		cin>>a>>b>>c; a--; b--;
+		g[i] = {a, b, c};
 	}bellman_ford(0);
 }
