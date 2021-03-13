@@ -7,30 +7,30 @@ using namespace std;
 const long mod=1e5;
 const int size=1e5;
 const int inf=1e9;
-int main(){lehmer / von Sterneck convolution
+int main(){
 }
 /*
-sorted
-auto it=lower_bound(v.begin(),v.end(),w) w <= v[it-v.begin()]
-auto it=upper_bound(v.begin(),v.end(),w) w < v[it-v.begin()]
+auto it = lower_bound(v.begin(), v.end(), w) w <= v[it-v.begin()]
+auto it = upper_bound(v.begin(), v.end(), w) w < v[it-v.begin()]
 void func(int* vec){}
 putchar(char) cout<<char<<endl;
 puts(string) cout<<string<<endl;
-1.*a/b int to double
-(int)'A'-65 char to int
-(int)'a'-48 char to int
-(char)(i+97) int to char
-stoi(s) string to int
-stoll(s)
-s={c} char to string
-s=string()+c
-s=""s+c
+'A' = 65, 'a' = 48, '0' = 97
+string(5, 'a');
+string to int
+	stoi(s)
+	stoll(s)
+char to string
+	s={c}
+	s=string()+c
+	s=""s+c
 cout.precision(16);
 cout<<fixed<<a;
 printf("%.6lf\n",a);
-accumulate(a,a+n,0);
 int A[N];
 rep(i,0,N) A[i]=i+1;
 do{
 }while(next_permutation(A,A+N));
+goto loop_out;
+loop_out:
 */
