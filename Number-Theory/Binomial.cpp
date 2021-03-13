@@ -5,7 +5,7 @@ using namespace std;
 #define print(A,n) rep(i,0,n){cout<<(i ? " ":"")<<A[i];}cout<<endl;
 #define pprint(A,m,n) rep(j,0,m){print(A[j],n);}
 const long mod=1e9+7;
-const int size=1e5;
+const int size=2e5;
 const int inf=1e9;
 template<typename T> T fact(T n){//n! O(n)
     T res = 1;
@@ -22,14 +22,12 @@ template<typename T> T comb(T n,T r){//nCr
 }
 //----------------------------------------------------------
 long fact[size];
-void calc(int n){
+void calc(long n){
 	fact[0] = 1;
-	rep(i,1,n+1){
-		fact[i] = (fact[i-1] * i) % mod;
-	}
+	rep(i,1,n) fact[i] = fact[i-1] * i % mod;
 	return;
 }
-long modcomb(long n,long r){//nCr mod p
+long modcomb(long n, long r){//nCr mod p
 	if(n < r) return 0;
 	long x = (fact[n-r] * fact[r]) % mod;
 	long res = 1; int i = 0;
@@ -37,27 +35,27 @@ long modcomb(long n,long r){//nCr mod p
 		if( (mod-2) & (1<<i) ) (res *= x) %= mod;
 		i++; x = x * x % mod;
 	}
-    return (res * fact[n]) % mod;
+    return res * fact[n] % mod;
 }
 //------------------------------------------------------------
-long modfact(long n,long p){//n! mod p
+long modfact(long n, long p){//n! mod p
     if(n >= p) return 0;
     long res = 1;
     rep(i,1,n+1) (res *= i) %= p;
     return res;
 }
-long modperm(long n,long r,long p){//nPr mod p
+long modperm(long n, long r, long p){//nPr mod p
     if( n-r >= p || r%p > n%p) return 0;
     long res = 1;
     rep(i,n-r+1,n+1) (res*=i) %= p;
     return res;
 }
-long modcomb(long n,long r,long p){//nCr mod p
-    long x = modfact(max(n-r,r),p);
-    long y = modperm(n,max(n-r,r),p);
+long modcomb(long n, long r, long p){//nCr mod p
+    long x = modfact(max(n-r, r), p);
+    long y = modperm(n, max(n-r, r), p);
 	int i = 0;
 	while( (p-2) >= (1<<i) ){
-		if( (p-2) & (1<<i) ) (y*=x)%=p;
+		if( (p-2) & (1<<i) ) (y *= x) %= p;
 		i++; x = x * x % p;
 	}
 	return y;
@@ -66,11 +64,9 @@ long modcomb(long n,long r,long p){//nCr mod p
 template<typename T>
 vector<vector<T>> pascal(T n){//O(N^2)
 	vector<vector<T>> table(n+1,vector<T>(n+1));
-	rep(i,0,n+1){
-		rep(j,0,i+1){
-			if(j==0||j==i) table[i][j]=1;
-			else table[i][j]=table[i-1][j-1]+table[i-1][j];
-		}
+	rep(i,0,n+1)rep(j,0,i+1){
+		if(j == 0 || j == i) table[i][j] = 1;
+		else table[i][j] = table[i-1][j-1] + table[i-1][j];
 	}return table;
 }
 

@@ -30,7 +30,7 @@ private:
     	int i = 0; long res = 1;
 	    while( (p-2) >= (1<<i) ){
 		    if((p-2) & (1<<i)) (res *= y) %= p;
-		    i++; y = y * y % p;
+		    i++; y = (y * y) % p;
 		}return {res};
     };
 };
