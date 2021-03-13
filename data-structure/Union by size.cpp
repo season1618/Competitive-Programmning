@@ -3,9 +3,10 @@ using namespace std;
 #define rep(i,x,y) for(int i=x;i<y;i++)
 #define range(a) (a).begin(),(a).end()
 #define print(A,n) rep(i,0,n){cout<<(i ? " ":"")<<A[i];}cout<<endl;
-#define pprint(A,m,n) rep(j,0,m){print(A[j],n);}const int size=1e5;
+#define pprint(A,m,n) rep(j,0,m){print(A[j],n);}
+const int size=1e5;
 int N,M;
-class union_find{// union by size
+class union_find{
 public:
 	vector<int> par;
 	vector<int> sub;
@@ -13,20 +14,24 @@ public:
 		rep(i,0,n){ par[i] = i; sub[i] = 1; }
 	}
 	int root(int v){
-		if(g[v]==v) return v;
-		else return root(g[v]);
+		if(par[v] == v) return v;
+		return root(par[v]);
+		// return par[v] = root(par[v]); O(alpha(n))
 	}
-	void unite(int x,int y){//union by size
-		int a = root(x);
-		int b = root(y);
-		if(a==b) return;
-		if(sub[a] < sub[b]) swap(a,b);
-		par[b] = a;
-		sub[a]++;
+	void unite(int x,int y){//union by size O(log n)
+		x = root(x);
+		y = root(y);
+		if(x == y) return;
+		if(sub[x] < sub[y]) swap(x, y);
+		par[y] = x;
+		sub[x] += sub[y];
 		return;
 	}
 	bool same(int x,int y){
-		return root(x)==root(y);
+		return root(x) == root(y);
+	}
+	int size(int v){
+		return sub[root(v)];
 	}
 };
 int main(){

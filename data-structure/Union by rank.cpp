@@ -5,32 +5,30 @@ using namespace std;
 #define print(A,n) rep(i,0,n){cout<<(i ? " ":"")<<A[i];}cout<<endl;
 #define pprint(A,m,n) rep(j,0,m){print(A[j],n);}
 const int size=1e5;
-int N,M;//N:vertex M:edge
-class union_find{//union by rank
+int N,M;
+class union_find{
 public:
 	vector<int> par;
-	vector<int> sub;// size of set
-	union_find(int n):par(n),sub(n){
-		rep(i,0,n){ par[i]=i; sub[i]=1; }
+	vector<int> rank;
+	union_find(int n):par(n),rank(n){
+		rep(i,0,n){ par[i] = i; rank[i] = 1; }
 	}
 	int root(int v){
-		if(par[v]==v) return v;
-		else{ par[v] = root(par[v]); return par[v]; }
+		if(par[v] == v) return v;
+		return root(par[v]);
+		// return par[v] = root(par[v]); O(alpha(n))
 	}
-	void unite(int x,int y){
-		int a = root(x);
-		int b = root(y); 
-		if(a==b) return;
-		if(sub[a] < sub[b]) swap(a,b);
-		par[b] = a;
-		sub[a] += sub[b];
+	void unite(int x,int y){// union by rank O(log n)
+		x = root(x);
+		y = root(y); 
+		if(x == y) return;
+		if(rank[x] < rank[y]) swap(x, y);
+		par[y] = x;
+		if(rank[x] == rank[y]) rank[x]++;
 		return;
 	}
 	bool same(int x,int y){
-		return root(x)==root(y);
-	}
-	int size(int v){
-		return sub[root(v)];
+		return root(x) == root(y);
 	}
 };
 int main(){
