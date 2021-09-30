@@ -89,20 +89,4 @@ int main(){
 	cout<<uf.root(N-1)<<endl;
 	cout<<uf.same(0,N-1)<<endl;
 	cout<<uf.size(N-1)<<endl;
-/*
-7 7
-1 2
-2 3
-3 1
-1 4
-2 4
-3 5
-6 7
-*/
-/*
-?
-5
-0
-2
-*/
 }
