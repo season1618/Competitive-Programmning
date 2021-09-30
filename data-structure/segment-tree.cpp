@@ -1,15 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define rep(i,x,y) for(int i=x;i<y;i++)
-#define range(a) (a).begin(),(a).end()
 #define print(A,n) rep(i,0,n){cout<<(i ? " ":"")<<A[i];}cout<<endl;
 #define pprint(A,m,n) rep(j,0,m){print(A[j],n);}
 template<typename T> class segtree{
 private:
 	int n;
   	T e = - 1e16;
+  	vector<T> node;
 public:
-	vector<T> node;
 	segtree(int siz){
 		n = 1;
 		while(n < siz) n *= 2;
@@ -19,9 +18,14 @@ public:
 	T func(T x, T y){
 		return max(x, y);
 	}
-	T at(int v){
+	T& at(int v){
 		return node[v+n-1];
-	}
+    }
+    void update(){
+    	for(int i = n-2; i >= 0; i--){
+        	node[i] = func(node[2*i+1], node[2*i+2]);
+        }
+    }
 	void update(int v, T s){ // O(log n)
 		v += n-1;
 		node[v] = func(node[v], s);
@@ -31,14 +35,14 @@ public:
 		}
 	}
 	T query(int l, int r, int v = 0, int a = 0, int b = -1){ // [l,r)
-      	if(b == -1) b = n;
+		if(b == -1) b = n;
 		if(b <= l || r <= a) return e;
-        else if(l <= a && b <= r) return node[v];
-        else{
-            T s = query(l, r, 2*v+1, a, (a+b)/2);
-            T t = query(l, r, 2*v+2, (a+b)/2, b);
-            return func(s, t);
-        }
+		else if(l <= a && b <= r) return node[v];
+		else{
+			T s = query(l, r, 2*v+1, a, (a+b)/2);
+			T t = query(l, r, 2*v+2, (a+b)/2, b);
+			return func(s, t);
+		}
 	}
 };
 
