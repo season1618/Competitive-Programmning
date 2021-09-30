@@ -1,30 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-template<typename T>
-class BIT:public vector<T>{
+template<typename T> class bit{
+	int n;
+	vector<T> node;
 public:
-	int length;
-	BIT(int length):vector<T>(length, 0){
-		this->length = length;
+	bit(int n){
+		this->n = n;
+		node.resize(n, -1);
 	}
-	int LSB(int n){ // Least Signifiant Bit
-		return n & (-n);
+	int lsb(int v){ // Least Signifiant Bit
+		return v & (-v);
+	}
+	void update(int i, T v){ // O(log n) a[i] += v;
+		while(i < n){
+			node[i] += v;
+			i += lsb(i + 1);
+		}
+		return;
 	}
 	T acm(int i){ // O(log n) a[0] + ... + a[i-1]
 		i--;
 		T ret = 0;
 		while(i >= 0){
-			ret += (*this)[i];
-			i -= LSB(i + 1);
+			ret += node[i];
+			i -= lsb(i + 1);
 		}
 		return ret;
-	}
-	void update(int i, T v){ // O(log n) a[i] += v;
-		while(i < length){
-			(*this)[i] += v;
-			i += LSB(i + 1);
-		}
-		return;
 	}
 };
