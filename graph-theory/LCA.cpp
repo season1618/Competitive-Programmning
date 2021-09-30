@@ -1,12 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define rep(i,x,y) for(int i=x;i<y;i++)
-#define range(a) (a).begin(),(a).end()
 #define print(A,x,n) rep(i,0,n){cout<<(i ? " ":"")<<A[i]x;}cout<<endl;
 #define pprint(A,y,m,n) rep(j,0,m){print(A[j],y,n);}
-const long mod=1e9+7;
-const int size=1e5;
-const int inf=1e9;
 class graph{
 public:
 	int n;
@@ -50,7 +46,7 @@ public:
 		int i = 0;
 		while(v != u){
 			if(par[i][v] == par[i][u]){
-	            if(i == 0) return par[0][v];
+				if(i == 0) return par[0][v];
 				v = par[i-1][v];
 				u = par[i-1][u];
 				i = 0;
