@@ -47,32 +47,39 @@ public:
 };
 
 class lazysegtree{
-public:
+private:
 	int n;
+	long e1 = 1e9, e2 = 0;
 	vector<long> node, lazy;
+public:
 	lazysegtree(int siz){
 		n = 1;
 		while(n < siz) n *= 2;
-		node.resize(2*n-1, 0);
-		lazy.resize(2*n-1, 0); // tanigen
+		node.resize(2*n-1, e1);
+		lazy.resize(2*n-1, e2); // tanigen
 	}
 private:
-	long func(long x, long y){
-		return (x + y) % mod;
-	}
 	void eval(int v, int l, int r){
-		if(lazy[v] != 0){
-			node[v] = func(node[v], lazy[v]);
+		if(lazy[v] != e2){
+			node[v] = node[v] + lazy[v];
 			if(r - l > 1){
-				lazy[2*v+1] = func(lazy[2*v+1], lazy[v]);
-				lazy[2*v+2] = func(lazy[2*v+2], lazy[v]);
+				lazy[2*v+1] = lazy[2*v+1] + lazy[v];
+				lazy[2*v+2] = lazy[2*v+2] + lazy[v];
 			}
-			lazy[v] = 0;
+			lazy[v] = e2;
 		}
 	}
 public:
-	long at(int v){
-		return func(node[v+n-1], lazy[v+n-1]);
+	void set(int v, int x){
+		node[v+n-1] = x;
+	}
+	long get(int v){
+		return node[v+n-1] + lazy[v+n-1];
+	}
+	void update(){
+		for(int i = n-2; i >= 0; i--){
+			node[i] = min(node[2*i+1], node[2*i+2]);
+		}
 	}
 	void update(int l, int r, long x, int v = 0, int a = 0, int b = -1){ // node[i] += x, i in [l, r)
 		if(b == -1) b = n;
@@ -85,17 +92,17 @@ public:
 		else{
 			update(l, r, x, 2*v+1, a, (a+b)/2);
 			update(l, r, x, 2*v+2, (a+b)/2, b);
-			node[v] = func(node[2*v+1], node[2*v+2]);
+			node[v] = min(node[2*v+1], node[2*v+2]);
 		}
 	}
 	long query(int l, int r, int v = 0, int a = 0, int b = -1){
 		if(b == -1) b = n;
-		if(b <= l || r <= a) return 0;
+		if(b <= l || r <= a) return e1;
 		eval(v, a, b);
 		if(l <= a && b <= r) return node[v];
 		int s = query(l, r, 2*v+1, a, (a+b)/2);
 		int t = query(l, r, 2*v+2, (a+b)/2, b);
-		return func(s, t);
+		return min(s, t);
 	}
 };
 
